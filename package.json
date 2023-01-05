@@ -1,5 +1,5 @@
 {
-  "name": "mastodon.js",
+  "name": "@dainfloop/mastodon.js",
   "version": "1.0.0",
   "description": "A simple library I use for the @getmastodon team on Replit.",
   "main": "index.js",
