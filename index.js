@@ -48,12 +48,14 @@ function buildRoute(baseUri) {
 module.exports = class Client {
   constructor(baseUri, auth={}) {
     this.baseUri = baseUri
-    this.authOpts = Object.assign({
-      clientId: null,
-      clientSecret: null,
-      scopes: [],
-      requireAuth: false
-    }, auth)
+    Object.defineProperty(this, 'authOpts', {
+        value: Object.assign({
+        clientId: null,
+        clientSecret: null,
+        scopes: [],
+        requireAuth: false
+      }, auth)
+    })
 
     if (this.authOpts.requireAuth) {
       if (!this.authOpts.clientId || !this.authOpts.clientSecret || !this.authOpts.scopes.length) {
@@ -68,5 +70,16 @@ module.exports = class Client {
   }
   get authUri() {
      return `${this.baseUri.slice(0, -7)}oauth/authorize?client_id=${this.authOpts.clientId}&scope=${this.authOpts.scopes.join('+')}&redirect_uri=urn:ietf:wg:oauth:2.0:oob&response_type=code`
+  }
+}
+
+module.exports.Scopes = {
+  Read: 'read',
+  Write: 'write',
+  Follow: 'follow',
+  Push: 'push',
+  Admin: {
+    Read: 'admin:read',
+    Write: 'admin:write'
   }
 }
